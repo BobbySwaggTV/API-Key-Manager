@@ -9,13 +9,15 @@ use XF\Mvc\Entity\Repository;
 
 class ApiKey extends Repository
 {
+    private const KEY_PREFIX = '15meu_';
+
     public function generateKey(): array
     {
-        $raw = 'cav7_' . \XF::generateRandomString(32);
+        $raw = self::KEY_PREFIX . \XF::generateRandomString(32);
         return [
             'raw'    => $raw,
             'hash'   => hash('sha256', $raw, true),
-            'prefix' => substr($raw, 5, 8),
+            'prefix' => substr($raw, strlen(self::KEY_PREFIX), 8),
         ];
     }
 

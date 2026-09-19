@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="public" title="cav7_api_key_account" version_id="1010010" version_string="1.1.0"><![CDATA[<xf:title>{{ phrase('cav7_api_key') }}</xf:title>
+  <template type="public" title="cav7_api_key_account" version_id="1020210" version_string="1.2.2"><![CDATA[<xf:title>{{ phrase('cav7_api_key') }}</xf:title>
 <xf:wrap template="account_wrapper"/>
 
 <xf:if is="$apiKey">
@@ -24,7 +24,7 @@
 				</xf:inforow>
 			</div>
 			<div class="block-rowMessage block-rowMessage--warning">
-				Keep your API key secret. It grants access to the 7Cav API on your behalf.
+				Keep your API key secret. It grants access to the 15th MEU API on your behalf.
 			</div>
 			<div class="block-footer block-footer--separated">
 				<form method="post" action="{{ link('account/api-key-rotate') }}" data-xf-submit-confirm="{{ phrase('cav7_api_key_rotate_confirm') }}" style="display:inline-block;margin-right:8px;">
@@ -42,7 +42,7 @@
 	<div class="block">
 		<div class="block-container">
 			<div class="block-body">
-				<xf:inforow>You don't have an API key yet. Generate one to authenticate with the 7Cav API.</xf:inforow>
+				<xf:inforow>You don't have an API key yet. Generate one to authenticate with the 15th MEU API.</xf:inforow>
 			</div>
 			<div class="block-footer block-footer--separated">
 				<form method="post" action="{{ link('account/api-key-create') }}">
@@ -54,7 +54,7 @@
 	</div>
 </xf:if>]]></template>
 
-  <template type="public" title="cav7_api_key_account_newkey" version_id="1020110" version_string="1.2.1"><![CDATA[<xf:title>{{ phrase('cav7_api_key') }}</xf:title>
+  <template type="public" title="cav7_api_key_account_newkey" version_id="1020210" version_string="1.2.2"><![CDATA[<xf:title>{{ phrase('cav7_api_key') }}</xf:title>
 <xf:wrap template="account_wrapper"/>
 
 <div class="block">
@@ -74,12 +74,7 @@
 				value="Authorization: Bearer {$rawKey}"
 				inputclass="input--mono"
 				readonly="true"
-				explain="Send this header with every API request. The Bearer scheme is required — sending the key without it will be rejected. Always use the full cav7_-prefixed key shown above, not the shortened prefix… preview displayed on your key list." />
-			<xf:textboxrow label="Example request"
-				name="_cav7_key_curl_example"
-				value="curl -H &quot;Authorization: Bearer {$rawKey}&quot; https://api.7cav.us/api/v1/milpacs/awol"
-				inputclass="input--mono"
-				readonly="true" />
+				explain="Send this header with every API request. The Bearer scheme is required — sending the key without it will be rejected. Always use the full 15meu_-prefixed key shown above, not the shortened prefix… preview displayed on your key list." />
 		</div>
 		<div class="block-footer">
 			<a href="{{ link('account/api-key') }}" class="button">Done</a>
