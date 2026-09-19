@@ -6,3 +6,6 @@ docs/superpowers/
 
 # Working notes for the AI-assisted dev loop; README is the public surface
 CLAUDE.md
+
+# Release packaging output
+dist/

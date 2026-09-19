@@ -21,9 +21,10 @@ A XenForo 2.3+ add-on that allows users to generate and manage personal API keys
 
 ## Installation
 
-1. Upload the contents of the `upload/` directory to your XenForo root.
-2. In the Admin Control Panel, go to **Add-ons** and install `Cav7/ApiKeyManager`.
-3. The installer will create the required `xf_15meu_api_key` database table automatically.
+1. Build the release package: `./scripts/build-release.sh`. This generates `dist/upload/` and a versioned zip under `dist/`.
+2. Upload or extract the package contents to your XenForo root so the add-on lands at `src/addons/Cav7/ApiKeyManager/`.
+3. In the Admin Control Panel, go to **Add-ons** and install `Cav7/ApiKeyManager`.
+4. The installer will create the required `xf_15meu_api_key` database table automatically.
 
 ## Usage
 
