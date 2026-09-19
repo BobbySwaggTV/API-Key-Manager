@@ -39,8 +39,47 @@ class ApiKey extends Repository
         return $key;
     }
 
+    public function isUserEligibleForApiKey(\XF\Entity\User $user): bool
+    {
+        return $user->user_state === 'valid' && !$user->is_banned;
+    }
+
+    public function syncKeyEligibilityForUser(\XF\Entity\User $user): void
+    {
+        $key = $this->getKeyForUser((int) $user->user_id);
+        if (!$key)
+        {
+            return;
+        }
+
+        if (!$this->isUserEligibleForApiKey($user))
+        {
+            if ($key->is_active)
+            {
+                $key->is_active = false;
+                $key->save();
+            }
+            return;
+        }
+
+        if (!$key->is_active)
+        {
+            $key->is_active = true;
+            $key->save();
+        }
+
+        $this->recomputeScopesForUser((int) $user->user_id, $key);
+    }
+
     public function createKeyForUser(int $userId): array
     {
+        /** @var \XF\Entity\User|null $user */
+        $user = $this->em->find('XF:User', $userId);
+        if (!$user || !$this->isUserEligibleForApiKey($user))
+        {
+            throw new \XF\PrintableException(\XF::phrase('cav7_api_key_ineligible'));
+        }
+
         $keyData = $this->generateKey();
 
         /** @var ApiKeyEntity $key */
@@ -59,6 +98,13 @@ class ApiKey extends Repository
 
     public function rotateKeyForUser(ApiKeyEntity $key): string
     {
+        /** @var \XF\Entity\User|null $user */
+        $user = $this->em->find('XF:User', (int) $key->user_id);
+        if (!$user || !$this->isUserEligibleForApiKey($user))
+        {
+            throw new \XF\PrintableException(\XF::phrase('cav7_api_key_ineligible'));
+        }
+
         $keyData = $this->generateKey();
         $key->key_hash   = $keyData['hash'];
         $key->key_prefix = $keyData['prefix'];

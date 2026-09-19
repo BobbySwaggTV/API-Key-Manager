@@ -27,6 +27,11 @@ class Account extends XFCP_Account
         $visitor = \XF::visitor();
         $repo = $this->getApiKeyRepo();
 
+        if (!$repo->isUserEligibleForApiKey($visitor))
+        {
+            return $this->error(\XF::phrase('cav7_api_key_ineligible'));
+        }
+
         if ($repo->getKeyForUser($visitor->user_id))
         {
             return $this->error(\XF::phrase('cav7_api_key_already_exists'));
@@ -43,6 +48,11 @@ class Account extends XFCP_Account
         $this->assertPostOnly();
         $visitor = \XF::visitor();
         $repo = $this->getApiKeyRepo();
+
+        if (!$repo->isUserEligibleForApiKey($visitor))
+        {
+            return $this->error(\XF::phrase('cav7_api_key_ineligible'));
+        }
 
         $key = $repo->getKeyForUser($visitor->user_id);
         if (!$key)

@@ -20,17 +20,51 @@ class Listener
         }
     }
 
-    protected static function onUserSave(\XF\Entity\User $user): void
+    public static function entityPostDelete(Entity $entity): void
     {
-        $changes = $user->getNewValues();
-        if (!isset($changes['user_group_id']) && !isset($changes['secondary_group_ids']))
+        if (!$entity instanceof \XF\Entity\User)
         {
             return;
         }
 
         /** @var \Cav7\ApiKeyManager\Repository\ApiKey $repo */
         $repo = \XF::repository('Cav7\ApiKeyManager:ApiKey');
-        $repo->recomputeScopesForUser((int) $user->user_id);
+        $key = $repo->getKeyForUser((int) $entity->user_id);
+        if ($key)
+        {
+            // ApiKey::_postDelete() removes the key's scope rows.
+            $key->delete();
+        }
+    }
+
+    protected static function onUserSave(\XF\Entity\User $user): void
+    {
+        $changes = $user->getNewValues();
+
+        $eligibilityChanged = isset($changes['user_state']) || isset($changes['is_banned']);
+        $groupsChanged = isset($changes['user_group_id']) || isset($changes['secondary_group_ids']);
+
+        if (!$eligibilityChanged && !$groupsChanged)
+        {
+            return;
+        }
+
+        /** @var \Cav7\ApiKeyManager\Repository\ApiKey $repo */
+        $repo = \XF::repository('Cav7\ApiKeyManager:ApiKey');
+
+        if ($eligibilityChanged)
+        {
+            // Deactivates/reactivates the key as needed; when the user is
+            // eligible it also recomputes scopes, covering any simultaneous
+            // group change without a duplicate recompute.
+            $repo->syncKeyEligibilityForUser($user);
+            return;
+        }
+
+        if ($repo->isUserEligibleForApiKey($user))
+        {
+            $repo->recomputeScopesForUser((int) $user->user_id);
+        }
     }
 
     protected static function onScopeDefSave(\Cav7\ApiKeyManager\Entity\ApiKeyScopeDef $def): void

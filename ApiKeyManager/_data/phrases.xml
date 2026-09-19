@@ -11,6 +11,7 @@
   <phrase title="cav7_api_key_permissions" global_cache="0" version_id="1010010" version_string="1.1.0"><![CDATA[Permissions]]></phrase>
   <phrase title="cav7_api_key_permissions_explain" global_cache="0" version_id="1010010" version_string="1.1.0"><![CDATA[These reflect your current forum permissions. They update automatically when your group or permission settings change.]]></phrase>
   <phrase title="cav7_api_key_no_scopes" global_cache="0" version_id="1010010" version_string="1.1.0"><![CDATA[No active permissions — your key cannot currently access any API endpoint.]]></phrase>
+  <phrase title="cav7_api_key_ineligible" global_cache="0" version_id="1020310" version_string="1.2.3"><![CDATA[Your account is not currently eligible to use an API key.]]></phrase>
   <phrase title="cav7_api_scopes" global_cache="0" version_id="1010010" version_string="1.1.0"><![CDATA[API Scopes]]></phrase>
   <phrase title="cav7_api_scope" global_cache="0" version_id="1010010" version_string="1.1.0"><![CDATA[API Scope]]></phrase>
   <phrase title="cav7_api_scope_name" global_cache="0" version_id="1010010" version_string="1.1.0"><![CDATA[Scope name]]></phrase>

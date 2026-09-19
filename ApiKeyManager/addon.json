@@ -1,8 +1,8 @@
 {
     "title": "15th MEU API Key Manager",
     "description": "Lets users generate personal API keys for the external API service. Keys are validated by the API via direct DB query.",
-    "version_id": 1020210,
-    "version_string": "1.2.2",
+    "version_id": 1020310,
+    "version_string": "1.2.3",
     "dev": "15th MEU",
     "addon_id": "Cav7/ApiKeyManager",
     "namespace": "Cav7\\ApiKeyManager",
