@@ -1,6 +1,6 @@
 <?php
 
-namespace Cav7\ApiKeyManager\Entity;
+namespace MEU15\ApiKeyManager\Entity;
 
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
@@ -11,15 +11,15 @@ use XF\Mvc\Entity\Structure;
  * @property int $scope_id
  *
  * RELATIONS
- * @property-read \Cav7\ApiKeyManager\Entity\ApiKey|null         $ApiKey
- * @property-read \Cav7\ApiKeyManager\Entity\ApiKeyScopeDef|null $ScopeDef
+ * @property-read \MEU15\ApiKeyManager\Entity\ApiKey|null         $ApiKey
+ * @property-read \MEU15\ApiKeyManager\Entity\ApiKeyScopeDef|null $ScopeDef
  */
 class ApiKeyScope extends Entity
 {
     public static function getStructure(Structure $structure): Structure
     {
         $structure->table      = 'xf_15meu_api_key_scope';
-        $structure->shortName  = 'Cav7\ApiKeyManager:ApiKeyScope';
+        $structure->shortName  = 'MEU15\ApiKeyManager:ApiKeyScope';
         $structure->primaryKey = ['key_id', 'scope_id'];
         $structure->columns = [
             'key_id'   => ['type' => self::UINT, 'required' => true],
@@ -27,13 +27,13 @@ class ApiKeyScope extends Entity
         ];
         $structure->relations = [
             'ApiKey' => [
-                'entity'     => 'Cav7\ApiKeyManager:ApiKey',
+                'entity'     => 'MEU15\ApiKeyManager:ApiKey',
                 'type'       => self::TO_ONE,
                 'conditions' => 'key_id',
                 'primary'    => true,
             ],
             'ScopeDef' => [
-                'entity'     => 'Cav7\ApiKeyManager:ApiKeyScopeDef',
+                'entity'     => 'MEU15\ApiKeyManager:ApiKeyScopeDef',
                 'type'       => self::TO_ONE,
                 'conditions' => 'scope_id',
                 'primary'    => true,

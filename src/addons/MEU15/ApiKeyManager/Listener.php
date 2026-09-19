@@ -1,6 +1,6 @@
 <?php
 
-namespace Cav7\ApiKeyManager;
+namespace MEU15\ApiKeyManager;
 
 use XF\Mvc\Entity\Entity;
 
@@ -13,7 +13,7 @@ class Listener
             self::onUserSave($entity);
             return;
         }
-        if ($entity instanceof \Cav7\ApiKeyManager\Entity\ApiKeyScopeDef)
+        if ($entity instanceof \MEU15\ApiKeyManager\Entity\ApiKeyScopeDef)
         {
             self::onScopeDefSave($entity);
             return;
@@ -27,8 +27,8 @@ class Listener
             return;
         }
 
-        /** @var \Cav7\ApiKeyManager\Repository\ApiKey $repo */
-        $repo = \XF::repository('Cav7\ApiKeyManager:ApiKey');
+        /** @var \MEU15\ApiKeyManager\Repository\ApiKey $repo */
+        $repo = \XF::repository('MEU15\ApiKeyManager:ApiKey');
         $key = $repo->getKeyForUser((int) $entity->user_id);
         if ($key)
         {
@@ -49,8 +49,8 @@ class Listener
             return;
         }
 
-        /** @var \Cav7\ApiKeyManager\Repository\ApiKey $repo */
-        $repo = \XF::repository('Cav7\ApiKeyManager:ApiKey');
+        /** @var \MEU15\ApiKeyManager\Repository\ApiKey $repo */
+        $repo = \XF::repository('MEU15\ApiKeyManager:ApiKey');
 
         if ($eligibilityChanged)
         {
@@ -67,7 +67,7 @@ class Listener
         }
     }
 
-    protected static function onScopeDefSave(\Cav7\ApiKeyManager\Entity\ApiKeyScopeDef $def): void
+    protected static function onScopeDefSave(\MEU15\ApiKeyManager\Entity\ApiKeyScopeDef $def): void
     {
         $changes = $def->getNewValues();
         if (!$def->isInsert()
@@ -80,8 +80,8 @@ class Listener
         // $manual = false so xf:run-jobs (the standard cron) picks it up.
         // Default is true, which would queue it for manual-trigger only.
         \XF::app()->jobManager()->enqueueUnique(
-            'cav7_recompute_scopes_all',
-            'Cav7\ApiKeyManager:RecomputeKeyScopes',
+            'meu15_recompute_scopes_all',
+            'MEU15\ApiKeyManager:RecomputeKeyScopes',
             ['all' => true],
             false
         );

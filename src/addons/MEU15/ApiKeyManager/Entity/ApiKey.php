@@ -1,6 +1,6 @@
 <?php
 
-namespace Cav7\ApiKeyManager\Entity;
+namespace MEU15\ApiKeyManager\Entity;
 
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
@@ -20,7 +20,7 @@ use XF\Mvc\Entity\Structure;
  *
  * RELATIONS
  * @property-read \XF\Entity\User|null $User
- * @property-read \XF\Mvc\Entity\AbstractCollection|\Cav7\ApiKeyManager\Entity\ApiKeyScope[] $Scopes
+ * @property-read \XF\Mvc\Entity\AbstractCollection|\MEU15\ApiKeyManager\Entity\ApiKeyScope[] $Scopes
  */
 class ApiKey extends Entity
 {
@@ -41,7 +41,7 @@ class ApiKey extends Entity
     public static function getStructure(Structure $structure): Structure
     {
         $structure->table = 'xf_15meu_api_key';
-        $structure->shortName = 'Cav7\ApiKeyManager:ApiKey';
+        $structure->shortName = 'MEU15\ApiKeyManager:ApiKey';
         $structure->primaryKey = 'key_id';
         $structure->columns = [
             'key_id'         => ['type' => self::UINT, 'autoIncrement' => true, 'nullable' => true],
@@ -63,7 +63,7 @@ class ApiKey extends Entity
                 'primary'    => true,
             ],
             'Scopes' => [
-                'entity'     => 'Cav7\ApiKeyManager:ApiKeyScope',
+                'entity'     => 'MEU15\ApiKeyManager:ApiKeyScope',
                 'type'       => self::TO_MANY,
                 'conditions' => 'key_id',
                 'key'        => 'scope_id',

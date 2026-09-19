@@ -1,12 +1,12 @@
 {
     "title": "15th MEU API Key Manager",
     "description": "Lets users generate personal API keys for the external API service. Keys are validated by the API via direct DB query.",
-    "version_id": 1020410,
-    "version_string": "1.2.4",
+    "version_id": 1020510,
+    "version_string": "1.2.5",
     "dev": "15th MEU",
-    "addon_id": "Cav7/ApiKeyManager",
-    "namespace": "Cav7\\ApiKeyManager",
-    "setup": "Cav7\\ApiKeyManager\\Setup",
+    "addon_id": "MEU15/ApiKeyManager",
+    "namespace": "MEU15\\ApiKeyManager",
+    "setup": "MEU15\\ApiKeyManager\\Setup",
     "require": {
         "XF": [2030000, "XenForo 2.3.0+"]
     }

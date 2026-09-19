@@ -1,8 +1,8 @@
 <?php
 
-namespace Cav7\ApiKeyManager\Admin\Controller;
+namespace MEU15\ApiKeyManager\Admin\Controller;
 
-use Cav7\ApiKeyManager\Repository\ApiKey as ApiKeyRepo;
+use MEU15\ApiKeyManager\Repository\ApiKey as ApiKeyRepo;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
 
@@ -18,8 +18,8 @@ class ApiKey extends \XF\Admin\Controller\AbstractController
         $keys = $this->getApiKeyRepo()->findKeysForAdminList()->fetch();
 
         return $this->view(
-            'Cav7\ApiKeyManager:ApiKey\List',
-            'cav7_api_key_list',
+            'MEU15\ApiKeyManager:ApiKey\List',
+            'meu15_api_key_list',
             ['apiKeys' => $keys]
         );
     }
@@ -29,19 +29,19 @@ class ApiKey extends \XF\Admin\Controller\AbstractController
         $this->assertPostOnly();
 
         $keyId = $this->filter('key_id', 'uint');
-        $key = $this->em()->find('Cav7\ApiKeyManager:ApiKey', $keyId);
+        $key = $this->em()->find('MEU15\ApiKeyManager:ApiKey', $keyId);
         if (!$key)
         {
-            return $this->error(\XF::phrase('cav7_api_key_not_found'));
+            return $this->error(\XF::phrase('meu15_api_key_not_found'));
         }
 
         $key->delete();
 
-        return $this->redirect($this->buildLink('cav7-api-keys'));
+        return $this->redirect($this->buildLink('meu15-api-keys'));
     }
 
     protected function getApiKeyRepo(): ApiKeyRepo
     {
-        return $this->repository('Cav7\ApiKeyManager:ApiKey');
+        return $this->repository('MEU15\ApiKeyManager:ApiKey');
     }
 }

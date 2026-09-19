@@ -1,9 +1,9 @@
 <?php
 
-namespace Cav7\ApiKeyManager\Admin\Controller;
+namespace MEU15\ApiKeyManager\Admin\Controller;
 
-use Cav7\ApiKeyManager\Entity\ApiKeyScopeDef;
-use Cav7\ApiKeyManager\Repository\ApiKeyScopeDef as ApiKeyScopeDefRepo;
+use MEU15\ApiKeyManager\Entity\ApiKeyScopeDef;
+use MEU15\ApiKeyManager\Repository\ApiKeyScopeDef as ApiKeyScopeDefRepo;
 use XF\Mvc\FormAction;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
@@ -20,8 +20,8 @@ class ApiScope extends \XF\Admin\Controller\AbstractController
         $scopes = $this->getScopeRepo()->findScopesForList()->fetch();
 
         return $this->view(
-            'Cav7\ApiKeyManager:ApiScope\List',
-            'cav7_api_scope_list',
+            'MEU15\ApiKeyManager:ApiScope\List',
+            'meu15_api_scope_list',
             ['scopes' => $scopes]
         );
     }
@@ -29,7 +29,7 @@ class ApiScope extends \XF\Admin\Controller\AbstractController
     public function actionAdd(): AbstractReply
     {
         /** @var ApiKeyScopeDef $scope */
-        $scope = $this->em()->create('Cav7\ApiKeyManager:ApiKeyScopeDef');
+        $scope = $this->em()->create('MEU15\ApiKeyManager:ApiKeyScopeDef');
         return $this->scopeAddEdit($scope);
     }
 
@@ -45,8 +45,8 @@ class ApiScope extends \XF\Admin\Controller\AbstractController
         $userGroupRepo = $this->repository('XF:UserGroup');
 
         return $this->view(
-            'Cav7\ApiKeyManager:ApiScope\Edit',
-            'cav7_api_scope_edit',
+            'MEU15\ApiKeyManager:ApiScope\Edit',
+            'meu15_api_scope_edit',
             [
                 'scope'      => $scope,
                 'userGroups' => $userGroupRepo->getUserGroupTitlePairs(),
@@ -65,12 +65,12 @@ class ApiScope extends \XF\Admin\Controller\AbstractController
         else
         {
             /** @var ApiKeyScopeDef $scope */
-            $scope = $this->em()->create('Cav7\ApiKeyManager:ApiKeyScopeDef');
+            $scope = $this->em()->create('MEU15\ApiKeyManager:ApiKeyScopeDef');
         }
 
         $this->scopeSaveProcess($scope)->run();
 
-        return $this->redirect($this->buildLink('cav7-api-scopes'));
+        return $this->redirect($this->buildLink('meu15-api-scopes'));
     }
 
     protected function scopeSaveProcess(ApiKeyScopeDef $scope): FormAction
@@ -108,15 +108,15 @@ class ApiScope extends \XF\Admin\Controller\AbstractController
         if ($this->isPost())
         {
             $scope->delete();
-            return $this->redirect($this->buildLink('cav7-api-scopes'));
+            return $this->redirect($this->buildLink('meu15-api-scopes'));
         }
 
         $viewParams = [
             'scope' => $scope,
         ];
         return $this->view(
-            'Cav7\ApiKeyManager:ApiScope\Delete',
-            'cav7_api_scope_delete',
+            'MEU15\ApiKeyManager:ApiScope\Delete',
+            'meu15_api_scope_delete',
             $viewParams
         );
     }
@@ -124,16 +124,16 @@ class ApiScope extends \XF\Admin\Controller\AbstractController
     protected function assertScopeExists(int $scopeId): ApiKeyScopeDef
     {
         /** @var ApiKeyScopeDef|null $scope */
-        $scope = $this->em()->find('Cav7\ApiKeyManager:ApiKeyScopeDef', $scopeId);
+        $scope = $this->em()->find('MEU15\ApiKeyManager:ApiKeyScopeDef', $scopeId);
         if (!$scope)
         {
-            throw $this->exception($this->notFound(\XF::phrase('cav7_api_scope_not_found')));
+            throw $this->exception($this->notFound(\XF::phrase('meu15_api_scope_not_found')));
         }
         return $scope;
     }
 
     protected function getScopeRepo(): ApiKeyScopeDefRepo
     {
-        return $this->repository('Cav7\ApiKeyManager:ApiKeyScopeDef');
+        return $this->repository('MEU15\ApiKeyManager:ApiKeyScopeDef');
     }
 }

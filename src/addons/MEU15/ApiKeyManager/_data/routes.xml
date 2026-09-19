@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="meu15-api-keys" controller="MEU15\ApiKeyManager\Admin\Controller\ApiKey" action_prefix=""/>
+  <route route_type="admin" route_prefix="meu15-api-scopes" controller="MEU15\ApiKeyManager\Admin\Controller\ApiScope" action_prefix=""/>
+</routes>

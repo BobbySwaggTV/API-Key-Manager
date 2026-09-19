@@ -1,9 +1,9 @@
 <?php
 
-namespace Cav7\ApiKeyManager\Repository;
+namespace MEU15\ApiKeyManager\Repository;
 
-use Cav7\ApiKeyManager\Entity\ApiKey as ApiKeyEntity;
-use Cav7\ApiKeyManager\Entity\ApiKeyScopeDef;
+use MEU15\ApiKeyManager\Entity\ApiKey as ApiKeyEntity;
+use MEU15\ApiKeyManager\Entity\ApiKeyScopeDef;
 use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
@@ -24,7 +24,7 @@ class ApiKey extends Repository
     public function findKeysForAdminList(): Finder
     {
         // Scopes is TO_MANY; cannot eager-load via Finder::with().
-        return $this->finder('Cav7\ApiKeyManager:ApiKey')
+        return $this->finder('MEU15\ApiKeyManager:ApiKey')
             ->with('User')
             ->setDefaultOrder('created_date', 'DESC');
     }
@@ -33,7 +33,7 @@ class ApiKey extends Repository
     {
         // Scopes is TO_MANY; cannot eager-load via Finder::with().
         /** @var ApiKeyEntity|null $key */
-        $key = $this->finder('Cav7\ApiKeyManager:ApiKey')
+        $key = $this->finder('MEU15\ApiKeyManager:ApiKey')
             ->where('user_id', $userId)
             ->fetchOne();
         return $key;
@@ -77,13 +77,13 @@ class ApiKey extends Repository
         $user = $this->em->find('XF:User', $userId);
         if (!$user || !$this->isUserEligibleForApiKey($user))
         {
-            throw new \XF\PrintableException(\XF::phrase('cav7_api_key_ineligible'));
+            throw new \XF\PrintableException(\XF::phrase('meu15_api_key_ineligible'));
         }
 
         $keyData = $this->generateKey();
 
         /** @var ApiKeyEntity $key */
-        $key = $this->em->create('Cav7\ApiKeyManager:ApiKey');
+        $key = $this->em->create('MEU15\ApiKeyManager:ApiKey');
         $key->user_id      = $userId;
         $key->key_hash     = $keyData['hash'];
         $key->key_prefix   = $keyData['prefix'];
@@ -102,7 +102,7 @@ class ApiKey extends Repository
         $user = $this->em->find('XF:User', (int) $key->user_id);
         if (!$user || !$this->isUserEligibleForApiKey($user))
         {
-            throw new \XF\PrintableException(\XF::phrase('cav7_api_key_ineligible'));
+            throw new \XF\PrintableException(\XF::phrase('meu15_api_key_ineligible'));
         }
 
         $keyData = $this->generateKey();
@@ -119,7 +119,7 @@ class ApiKey extends Repository
     {
         if (!$key)
         {
-            $key = $this->finder('Cav7\ApiKeyManager:ApiKey')
+            $key = $this->finder('MEU15\ApiKeyManager:ApiKey')
                 ->where('user_id', $userId)
                 ->fetchOne();
             if (!$key)
@@ -144,8 +144,8 @@ class ApiKey extends Repository
             $secondaryGroupIds
         )));
 
-        /** @var \Cav7\ApiKeyManager\Repository\ApiKeyScopeDef $scopeRepo */
-        $scopeRepo = $this->repository('Cav7\ApiKeyManager:ApiKeyScopeDef');
+        /** @var \MEU15\ApiKeyManager\Repository\ApiKeyScopeDef $scopeRepo */
+        $scopeRepo = $this->repository('MEU15\ApiKeyManager:ApiKeyScopeDef');
         $defs = $scopeRepo->findActiveScopes()->fetch();
 
         $grants = [];

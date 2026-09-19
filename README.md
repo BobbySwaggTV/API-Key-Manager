@@ -2,8 +2,6 @@
 
 A XenForo 2.3+ add-on that allows users to generate and manage personal API keys for external API integrations.
 
-15th MEU fork of the upstream [7Cav API Key Manager](https://github.com/7Cav/API-Key-Manager) project.
-
 ## Features
 
 - Per-user API key generation with secure hashed storage
@@ -22,8 +20,8 @@ A XenForo 2.3+ add-on that allows users to generate and manage personal API keys
 ## Installation
 
 1. Build the release package: `./scripts/build-release.sh`. This generates `dist/upload/` and a versioned zip under `dist/`.
-2. Upload or extract the package contents to your XenForo root so the add-on lands at `src/addons/Cav7/ApiKeyManager/`.
-3. In the Admin Control Panel, go to **Add-ons** and install `Cav7/ApiKeyManager`.
+2. Upload or extract the package contents to your XenForo root so the add-on lands at `src/addons/MEU15/ApiKeyManager/`.
+3. In the Admin Control Panel, go to **Add-ons** and install `MEU15/ApiKeyManager`.
 4. The installer will create the required `xf_15meu_api_key` database table automatically.
 
 ## Usage
@@ -38,12 +36,10 @@ Admins can view and revoke any user's API key via the ACP at **Admin > API Keys*
 Admins define the available scopes in the ACP at **Admin > API Scopes**. Each scope has a name (the wire identifier used by the API consumer), a human title, and an optional list of gating usergroups. Scopes with no groups attached are granted to every user with a key; scopes with groups are granted only to users in at least one of those groups (primary or secondary). Scope grants are recomputed automatically when a user's group membership changes or when a scope definition is edited.
 
 ### API Authentication
-Include the API key in requests to authenticate. The consumer API validates the key against the database and checks that the key holds the scope required by the requested endpoint. See the upstream [7Cav API](https://github.com/7Cav/api) for the validation query and scope-check design this add-on implements.
+Include the API key in requests to authenticate. The consumer API validates the key against the database and checks that the key holds the scope required by the requested endpoint.
 
 This add-on is specifically designed to work with the 15th MEU API.
 
 ## License
 
 MIT License — see [LICENSE.md](LICENSE.md) for details.
-
-Copyright (c) 2026 7Cav

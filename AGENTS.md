@@ -6,7 +6,7 @@ Guidance for AI coding agents working in this repo.
 
 ### Issue tracker
 
-Issues are tracked in this repo's GitHub Issues (`7Cav/API-Key-Manager`) via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+Issues are tracked in this repo's GitHub Issues (`BobbySwaggTV/API-Key-Manager`) via the `gh` CLI. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 

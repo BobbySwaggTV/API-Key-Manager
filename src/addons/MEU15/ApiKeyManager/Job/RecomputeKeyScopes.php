@@ -1,6 +1,6 @@
 <?php
 
-namespace Cav7\ApiKeyManager\Job;
+namespace MEU15\ApiKeyManager\Job;
 
 use XF\Job\AbstractJob;
 
@@ -18,8 +18,8 @@ class RecomputeKeyScopes extends AbstractJob
     {
         $startTime = microtime(true);
 
-        /** @var \Cav7\ApiKeyManager\Repository\ApiKey $keyRepo */
-        $keyRepo = \XF::repository('Cav7\ApiKeyManager:ApiKey');
+        /** @var \MEU15\ApiKeyManager\Repository\ApiKey $keyRepo */
+        $keyRepo = \XF::repository('MEU15\ApiKeyManager:ApiKey');
         $db = \XF::db();
 
         if ($this->data['user_id'])

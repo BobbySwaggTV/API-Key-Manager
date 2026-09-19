@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
 # Builds a XenForo-ready upload package from the repository's
-# ApiKeyManager/ source directory.
+# src/addons/MEU15/ApiKeyManager/ source tree.
 #
 # Output:
-#   dist/upload/src/addons/Cav7/ApiKeyManager/   (extract to XenForo root)
+#   dist/upload/src/addons/MEU15/ApiKeyManager/  (extract to XenForo root)
 #   dist/15th-meu-api-key-manager-<version>.zip  (same tree, zipped)
 #
 set -euo pipefail
@@ -12,11 +12,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd -P)"
 REPO_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd -P)"
 
-ADDON_SRC="${REPO_ROOT}/ApiKeyManager"
+SRC_DIR="${REPO_ROOT}/src"
+ADDON_SRC="${SRC_DIR}/addons/MEU15/ApiKeyManager"
 ADDON_JSON="${ADDON_SRC}/addon.json"
 DIST_DIR="${REPO_ROOT}/dist"
 UPLOAD_DIR="${DIST_DIR}/upload"
-ADDON_DEST="${UPLOAD_DIR}/src/addons/Cav7/ApiKeyManager"
+ADDON_DEST="${UPLOAD_DIR}/src/addons/MEU15/ApiKeyManager"
 
 if [[ ! -f "${ADDON_JSON}" ]]; then
     echo "error: ${ADDON_JSON} not found — run from the API-Key-Manager repository" >&2
@@ -36,11 +37,12 @@ if [[ -z "${VERSION}" ]]; then
 fi
 
 rm -rf "${DIST_DIR}"
-mkdir -p "${ADDON_DEST}"
+mkdir -p "${UPLOAD_DIR}/src"
 
-# Copy the add-on contents only — repo-level files (.git, docs/, README,
-# LICENSE, scripts/) never ship inside the XenForo add-on directory.
-cp -a "${ADDON_SRC}/." "${ADDON_DEST}/"
+# The src/ tree already mirrors the XenForo upload layout — copy it
+# verbatim. Repo-level files (.git, docs/, README, LICENSE, scripts/)
+# live outside src/ and never ship inside the package.
+cp -a "${SRC_DIR}/." "${UPLOAD_DIR}/src/"
 
 ZIP_PATH="${DIST_DIR}/15th-meu-api-key-manager-${VERSION}.zip"
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cav7\ApiKeyManager\Entity;
+namespace MEU15\ApiKeyManager\Entity;
 
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
@@ -39,7 +39,7 @@ class ApiKeyScopeDef extends Entity
 
         if (!preg_match('/^[a-z][a-z0-9_:]*$/', $this->scope_name))
         {
-            $this->error(\XF::phrase('cav7_api_scope_name_invalid'), 'scope_name');
+            $this->error(\XF::phrase('meu15_api_scope_name_invalid'), 'scope_name');
         }
     }
 
@@ -55,7 +55,7 @@ class ApiKeyScopeDef extends Entity
     public static function getStructure(Structure $structure): Structure
     {
         $structure->table      = 'xf_15meu_api_key_scope_def';
-        $structure->shortName  = 'Cav7\ApiKeyManager:ApiKeyScopeDef';
+        $structure->shortName  = 'MEU15\ApiKeyManager:ApiKeyScopeDef';
         $structure->primaryKey = 'scope_id';
         $structure->columns = [
             'scope_id'        => ['type' => self::UINT, 'autoIncrement' => true, 'nullable' => true],

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="public" title="cav7_api_key_account" version_id="1020210" version_string="1.2.2"><![CDATA[<xf:title>{{ phrase('cav7_api_key') }}</xf:title>
+  <template type="public" title="meu15_api_key_account" version_id="1020210" version_string="1.2.2"><![CDATA[<xf:title>{{ phrase('meu15_api_key') }}</xf:title>
 <xf:wrap template="account_wrapper"/>
 
 <xf:if is="$apiKey">
@@ -12,14 +12,14 @@
 				<xf:if is="$apiKey.last_used_date">
 					<xf:inforow label="Last used">{{ date_time($apiKey.last_used_date) }}</xf:inforow>
 				</xf:if>
-				<xf:inforow label="{{ phrase('cav7_api_key_permissions') }}"
-					hint="{{ phrase('cav7_api_key_permissions_explain') }}">
+				<xf:inforow label="{{ phrase('meu15_api_key_permissions') }}"
+					hint="{{ phrase('meu15_api_key_permissions_explain') }}">
 					<xf:if is="$apiKey.Scopes is not empty">
 						<xf:foreach loop="$apiKey.Scopes" value="$grant">
 							<span class="label" title="{{ $grant.ScopeDef.description }}">{{ $grant.ScopeDef.title }}</span>
 						</xf:foreach>
 					<xf:else />
-						<em>{{ phrase('cav7_api_key_no_scopes') }}</em>
+						<em>{{ phrase('meu15_api_key_no_scopes') }}</em>
 					</xf:if>
 				</xf:inforow>
 			</div>
@@ -27,11 +27,11 @@
 				Keep your API key secret. It grants access to the 15th MEU API on your behalf.
 			</div>
 			<div class="block-footer block-footer--separated">
-				<form method="post" action="{{ link('account/api-key-rotate') }}" data-xf-submit-confirm="{{ phrase('cav7_api_key_rotate_confirm') }}" style="display:inline-block;margin-right:8px;">
+				<form method="post" action="{{ link('account/api-key-rotate') }}" data-xf-submit-confirm="{{ phrase('meu15_api_key_rotate_confirm') }}" style="display:inline-block;margin-right:8px;">
 					<xf:csrf />
 					<button type="submit" class="button">Rotate Key</button>
 				</form>
-				<form method="post" action="{{ link('account/api-key-revoke') }}" data-xf-submit-confirm="{{ phrase('cav7_api_key_revoke_confirm') }}" style="display:inline-block;">
+				<form method="post" action="{{ link('account/api-key-revoke') }}" data-xf-submit-confirm="{{ phrase('meu15_api_key_revoke_confirm') }}" style="display:inline-block;">
 					<xf:csrf />
 					<button type="submit" class="button button--danger">Revoke Key</button>
 				</form>
@@ -54,23 +54,23 @@
 	</div>
 </xf:if>]]></template>
 
-  <template type="public" title="cav7_api_key_account_newkey" version_id="1020210" version_string="1.2.2"><![CDATA[<xf:title>{{ phrase('cav7_api_key') }}</xf:title>
+  <template type="public" title="meu15_api_key_account_newkey" version_id="1020210" version_string="1.2.2"><![CDATA[<xf:title>{{ phrase('meu15_api_key') }}</xf:title>
 <xf:wrap template="account_wrapper"/>
 
 <div class="block">
 	<div class="block-container">
 		<div class="block-body">
 			<div class="block-rowMessage block-rowMessage--important">
-				<strong>{{ phrase('cav7_api_key_new_key_warning') }}</strong>
+				<strong>{{ phrase('meu15_api_key_new_key_warning') }}</strong>
 			</div>
 			<xf:textboxrow label="Your API Key"
-				name="_cav7_key_display"
+				name="_meu15_key_display"
 				value="{$rawKey}"
 				inputclass="input--mono"
 				readonly="true"
 				explain="Store this somewhere safe — it cannot be retrieved again." />
 			<xf:textboxrow label="Authorization header"
-				name="_cav7_key_auth_header"
+				name="_meu15_key_auth_header"
 				value="Authorization: Bearer {$rawKey}"
 				inputclass="input--mono"
 				readonly="true"
@@ -82,11 +82,11 @@
 	</div>
 </div>]]></template>
 
-  <template type="admin" title="cav7_api_key_list" version_id="1010010" version_string="1.1.0"><![CDATA[<xf:title>{{ phrase('cav7_api_keys') }}</xf:title>
+  <template type="admin" title="meu15_api_key_list" version_id="1010010" version_string="1.1.0"><![CDATA[<xf:title>{{ phrase('meu15_api_keys') }}</xf:title>
 
 <div class="block">
 	<div class="block-container">
-		<h2 class="block-header">{{ phrase('cav7_api_keys') }}</h2>
+		<h2 class="block-header">{{ phrase('meu15_api_keys') }}</h2>
 		<xf:if is="$apiKeys.count()">
 			<table class="dataList">
 				<thead>
@@ -128,7 +128,7 @@
 								</xf:if>
 							</td>
 							<td class="dataList-col--action">
-								<form method="post" action="{{ link('cav7-api-keys/revoke') }}" data-xf-submit-confirm="Revoke this user's API key? They will lose API access immediately.">
+								<form method="post" action="{{ link('meu15-api-keys/revoke') }}" data-xf-submit-confirm="Revoke this user's API key? They will lose API access immediately.">
 									<input type="hidden" name="key_id" value="{{ $key.key_id }}" />
 									<xf:csrf />
 									<button type="submit" class="button button--danger button--small">Revoke</button>
@@ -146,10 +146,10 @@
 	</div>
 </div>]]></template>
 
-  <template type="admin" title="cav7_api_scope_list" version_id="1020010" version_string="1.2.0"><![CDATA[<xf:title>{{ phrase('cav7_api_scopes') }}</xf:title>
+  <template type="admin" title="meu15_api_scope_list" version_id="1020010" version_string="1.2.0"><![CDATA[<xf:title>{{ phrase('meu15_api_scopes') }}</xf:title>
 
 <xf:pageaction>
-	<xf:button href="{{ link('cav7-api-scopes/add') }}" icon="add">Add scope</xf:button>
+	<xf:button href="{{ link('meu15-api-scopes/add') }}" icon="add">Add scope</xf:button>
 </xf:pageaction>
 
 <div class="block">
@@ -187,8 +187,8 @@
 							</td>
 							<td>{{ $scope.display_order }}</td>
 							<td class="dataList-col--action">
-								<a class="button button--small" href="{{ link('cav7-api-scopes/edit', $scope) }}">Edit</a>
-								<a class="button button--small button--danger" href="{{ link('cav7-api-scopes/delete', $scope) }}">Delete</a>
+								<a class="button button--small" href="{{ link('meu15-api-scopes/edit', $scope) }}">Edit</a>
+								<a class="button button--small button--danger" href="{{ link('meu15-api-scopes/delete', $scope) }}">Delete</a>
 							</td>
 						</tr>
 					</xf:foreach>
@@ -196,36 +196,36 @@
 			</table>
 		<xf:else />
 			<div class="block-body">
-				<div class="block-rowMessage">{{ phrase('cav7_api_scope_no_scopes') }}</div>
+				<div class="block-rowMessage">{{ phrase('meu15_api_scope_no_scopes') }}</div>
 			</div>
 		</xf:if>
 	</div>
 </div>]]></template>
 
-  <template type="admin" title="cav7_api_scope_edit" version_id="1020010" version_string="1.2.0"><![CDATA[<xf:title>{{ phrase('cav7_api_scope') }}<xf:if is="$scope.scope_id">: {$scope.title}</xf:if></xf:title>
+  <template type="admin" title="meu15_api_scope_edit" version_id="1020010" version_string="1.2.0"><![CDATA[<xf:title>{{ phrase('meu15_api_scope') }}<xf:if is="$scope.scope_id">: {$scope.title}</xf:if></xf:title>
 
-<xf:form action="{{ link('cav7-api-scopes/save', $scope) }}" ajax="true" class="block">
+<xf:form action="{{ link('meu15-api-scopes/save', $scope) }}" ajax="true" class="block">
 	<div class="block-container">
 		<div class="block-body">
 			<xf:if is="$scope.scope_id">
-				<xf:inforow label="{{ phrase('cav7_api_scope_name') }}">
+				<xf:inforow label="{{ phrase('meu15_api_scope_name') }}">
 					<code>{{ $scope.scope_name }}</code>
 				</xf:inforow>
 			<xf:else />
 				<xf:textboxrow name="scope_name" value="{$scope.scope_name}"
-					label="{{ phrase('cav7_api_scope_name') }}"
-					explain="{{ phrase('cav7_api_scope_name_explain') }}" />
+					label="{{ phrase('meu15_api_scope_name') }}"
+					explain="{{ phrase('meu15_api_scope_name_explain') }}" />
 			</xf:if>
 
 			<xf:textboxrow name="title" value="{$scope.title}"
 				label="Title"
-				explain="{{ phrase('cav7_api_scope_title_explain') }}" />
+				explain="{{ phrase('meu15_api_scope_title_explain') }}" />
 
 			<xf:textarearow name="description" value="{$scope.description}"
 				label="Description" rows="3"
-				explain="{{ phrase('cav7_api_scope_description_explain') }}" />
+				explain="{{ phrase('meu15_api_scope_description_explain') }}" />
 
-			<xf:formrow label="{{ phrase('cav7_api_scope_user_groups') }}" explain="{{ phrase('cav7_api_scope_user_groups_explain') }}">
+			<xf:formrow label="{{ phrase('meu15_api_scope_user_groups') }}" explain="{{ phrase('meu15_api_scope_user_groups_explain') }}">
 				<xf:select name="user_group_ids[]" multiple="true" value="{{ explode(',', $scope.user_group_ids) }}" size="8">
 					<xf:foreach loop="$userGroups" key="$groupId" value="$groupTitle">
 						<xf:option value="{$groupId}">{$groupTitle}</xf:option>
@@ -244,12 +244,12 @@
 	</div>
 </xf:form>]]></template>
 
-  <template type="admin" title="cav7_api_scope_delete" version_id="1010010" version_string="1.1.0"><![CDATA[<xf:title>{{ phrase('cav7_api_scope') }}: {{ $scope.title }}</xf:title>
+  <template type="admin" title="meu15_api_scope_delete" version_id="1010010" version_string="1.1.0"><![CDATA[<xf:title>{{ phrase('meu15_api_scope') }}: {{ $scope.title }}</xf:title>
 
-<xf:form action="{{ link('cav7-api-scopes/delete', $scope) }}" class="block">
+<xf:form action="{{ link('meu15-api-scopes/delete', $scope) }}" class="block">
 	<div class="block-container">
 		<div class="block-body">
-			<div class="block-rowMessage">{{ phrase('cav7_api_scope_delete_confirm') }}</div>
+			<div class="block-rowMessage">{{ phrase('meu15_api_scope_delete_confirm') }}</div>
 		</div>
 		<xf:submitrow icon="delete" sticky="true" />
 	</div>
