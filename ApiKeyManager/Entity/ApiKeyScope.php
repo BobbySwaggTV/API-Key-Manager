@@ -18,7 +18,7 @@ class ApiKeyScope extends Entity
 {
     public static function getStructure(Structure $structure): Structure
     {
-        $structure->table      = 'xf_cav7_api_key_scope';
+        $structure->table      = 'xf_15meu_api_key_scope';
         $structure->shortName  = 'Cav7\ApiKeyManager:ApiKeyScope';
         $structure->primaryKey = ['key_id', 'scope_id'];
         $structure->columns = [

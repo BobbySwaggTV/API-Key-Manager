@@ -32,7 +32,7 @@ class ApiKey extends Entity
     protected function _postDelete(): void
     {
         $this->db()->delete(
-            'xf_cav7_api_key_scope',
+            'xf_15meu_api_key_scope',
             'key_id = ?',
             $this->key_id
         );
@@ -40,7 +40,7 @@ class ApiKey extends Entity
 
     public static function getStructure(Structure $structure): Structure
     {
-        $structure->table = 'xf_cav7_api_key';
+        $structure->table = 'xf_15meu_api_key';
         $structure->shortName = 'Cav7\ApiKeyManager:ApiKey';
         $structure->primaryKey = 'key_id';
         $structure->columns = [

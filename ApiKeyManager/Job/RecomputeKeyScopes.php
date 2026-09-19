@@ -44,7 +44,7 @@ class RecomputeKeyScopes extends AbstractJob
             }
 
             $sql = "SELECT k.user_id
-                    FROM xf_cav7_api_key k
+                    FROM xf_15meu_api_key k
                     INNER JOIN xf_user u ON u.user_id = k.user_id
                     WHERE " . implode(' AND ', $where) . "
                     ORDER BY k.user_id ASC

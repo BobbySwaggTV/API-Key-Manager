@@ -172,10 +172,10 @@ class ApiKey extends Repository
         $db->beginTransaction();
         try
         {
-            $db->delete('xf_cav7_api_key_scope', 'key_id = ?', $key->key_id);
+            $db->delete('xf_15meu_api_key_scope', 'key_id = ?', $key->key_id);
             foreach ($grants as $scopeId)
             {
-                $db->insert('xf_cav7_api_key_scope', [
+                $db->insert('xf_15meu_api_key_scope', [
                     'key_id'   => $key->key_id,
                     'scope_id' => $scopeId,
                 ]);

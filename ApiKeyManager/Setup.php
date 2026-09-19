@@ -16,7 +16,7 @@ class Setup extends AbstractSetup
     public function installStep1(): void
     {
         $this->db()->query("
-            CREATE TABLE IF NOT EXISTS `xf_cav7_api_key` (
+            CREATE TABLE IF NOT EXISTS `xf_15meu_api_key` (
                 `key_id`          INT UNSIGNED   NOT NULL AUTO_INCREMENT,
                 `user_id`         INT UNSIGNED   NOT NULL,
                 `key_hash`        VARBINARY(32)  NOT NULL,
@@ -35,7 +35,7 @@ class Setup extends AbstractSetup
     public function installStep2(): void
     {
         $this->db()->query("
-            CREATE TABLE IF NOT EXISTS `xf_cav7_api_key_scope_def` (
+            CREATE TABLE IF NOT EXISTS `xf_15meu_api_key_scope_def` (
                 `scope_id`         INT UNSIGNED   NOT NULL AUTO_INCREMENT,
                 `scope_name`       VARCHAR(50)    NOT NULL,
                 `title`            VARCHAR(100)   NOT NULL,
@@ -53,7 +53,7 @@ class Setup extends AbstractSetup
     public function installStep3(): void
     {
         $this->db()->query("
-            CREATE TABLE IF NOT EXISTS `xf_cav7_api_key_scope` (
+            CREATE TABLE IF NOT EXISTS `xf_15meu_api_key_scope` (
                 `key_id`   INT UNSIGNED NOT NULL,
                 `scope_id` INT UNSIGNED NOT NULL,
                 PRIMARY KEY (`key_id`, `scope_id`),
@@ -67,14 +67,14 @@ class Setup extends AbstractSetup
         $db = $this->db();
 
         $exists = (bool) $db->fetchOne(
-            "SELECT scope_id FROM xf_cav7_api_key_scope_def WHERE scope_name = 'read'"
+            "SELECT scope_id FROM xf_15meu_api_key_scope_def WHERE scope_name = 'read'"
         );
         if ($exists)
         {
             return;
         }
 
-        $db->insert('xf_cav7_api_key_scope_def', [
+        $db->insert('xf_15meu_api_key_scope_def', [
             'scope_name'    => 'read',
             'title'         => 'Read',
             'description'   => 'Read access to public API data.',
@@ -163,18 +163,54 @@ class Setup extends AbstractSetup
         });
     }
 
+    public function upgrade1020410Step1(): void
+    {
+        // 1.2.4 renamed the add-on's tables from xf_cav7_* to xf_15meu_*.
+        // Rename in place to preserve all existing key/scope data. Each rename
+        // is guarded so the step is idempotent and never clobbers an existing
+        // xf_15meu_* table.
+        $sm = $this->schemaManager();
+
+        $renames = [
+            'xf_cav7_api_key'           => 'xf_15meu_api_key',
+            'xf_cav7_api_key_scope_def' => 'xf_15meu_api_key_scope_def',
+            'xf_cav7_api_key_scope'     => 'xf_15meu_api_key_scope',
+        ];
+
+        foreach ($renames as $oldTable => $newTable)
+        {
+            $oldExists = $this->tableExists($oldTable);
+            $newExists = $this->tableExists($newTable);
+
+            if ($oldExists && $newExists)
+            {
+                throw new \RuntimeException(
+                    "Cannot migrate API key tables: both `{$oldTable}` and `{$newTable}` exist. "
+                    . "Automatic migration cannot safely determine which table contains "
+                    . "authoritative data. Inspect and resolve the conflict manually "
+                    . "(drop or archive one of the tables), then retry the upgrade."
+                );
+            }
+
+            if ($oldExists)
+            {
+                $sm->renameTable($oldTable, $newTable);
+            }
+        }
+    }
+
     public function uninstallStep1(): void
     {
-        $this->db()->query("DROP TABLE IF EXISTS `xf_cav7_api_key_scope`");
+        $this->db()->query("DROP TABLE IF EXISTS `xf_15meu_api_key_scope`");
     }
 
     public function uninstallStep2(): void
     {
-        $this->db()->query("DROP TABLE IF EXISTS `xf_cav7_api_key_scope_def`");
+        $this->db()->query("DROP TABLE IF EXISTS `xf_15meu_api_key_scope_def`");
     }
 
     public function uninstallStep3(): void
     {
-        $this->db()->query("DROP TABLE IF EXISTS `xf_cav7_api_key`");
+        $this->db()->query("DROP TABLE IF EXISTS `xf_15meu_api_key`");
     }
 }
